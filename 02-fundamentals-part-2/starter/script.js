@@ -310,75 +310,241 @@
 // console.log(jonasAdvanced.getSummary());
 
 //Conding Challenge #3
-const user = {
-    firstName: 'Page',
-    lastName: 'Aurellano',
-    birthYear: 2005,
-    location: 'Manila - Philippines',
-    interests: ['Badminton', 'Online Games', 'Money'],
-    friends: [
-        {
-            name: 'Morales, Sean Adrian',
-            status: 'Active'
-        },{
-            name: 'Cando, Will Allen',
-            status: 'Active'
-        },{
-            name: 'Belicano, Mark Antonio',
-            status: 'Active'
-        },{
-            name: 'Abilong, Gyrzzel Jhyne',
-            status: 'Active'
-        },{
-            name: 'Maaya, Minierva',
-            status: 'Active'
-        },
-    ],
-    isActive: true,
-    calcAge(){
-        this.age = 2025 - this.birthYear;
-        return this.age;
-    },
-    addFriend(name, status) {
-        this.friends.push({name, status});
-    },
-    getActiveFriends(){
-        let active = new Array;
-        this.friends.forEach((friend) => {
-            if(friend.status === 'Active'){
-                active.push(friend);
-            }
-        });
+// const user = {
+//     firstName: 'Page',
+//     lastName: 'Aurellano',
+//     birthYear: 2005,
+//     location: 'Manila - Philippines',
+//     interests: ['Badminton', 'Online Games', 'Money'],
+//     friends: [
+//         {
+//             name: 'Morales, Sean Adrian',
+//             status: 'Active'
+//         },{
+//             name: 'Cando, Will Allen',
+//             status: 'Active'
+//         },{
+//             name: 'Belicano, Mark Antonio',
+//             status: 'Active'
+//         },{
+//             name: 'Abilong, Gyrzzel Jhyne',
+//             status: 'Active'
+//         },{
+//             name: 'Maaya, Minierva',
+//             status: 'Active'
+//         },
+//     ],
+//     isActive: true,
+//     calcAge(){
+//         this.age = 2025 - this.birthYear;
+//         return this.age;
+//     },
+//     addFriend(name, status) {
+//         this.friends.push({name, status});
+//     },
+//     getActiveFriends(){
+//         let active = new Array;
+//         this.friends.forEach((friend) => {
+//             if(friend.status === 'Active'){
+//                 active.push(friend);
+//             }
+//         });
 
-        return active;
+//         return active;
+//     },
+//     getSummary(){
+//         return `
+//         I'm ${this.firstName} ${this.lastName}, ${this.calcAge()} - years old.\n
+//         location: ${this.location}\n
+//         Friends count: ${this.friends.length}\n
+//         Interests:\n
+//         ${(() => {
+//             let interests = '';
+//             this.interests.forEach((interest) => {
+//                 interests += `\t- ${interest}\n\t\t`;
+//             });
+//             return interests;
+//         })()}
+//         `;
+//     },
+//     toggleStatus(){
+//         if(this.isActive){
+//             this.isActive = false;
+//         }else{
+//             this.isActive = true;
+//         }
+//     }
+// };
+
+
+// console.log(user.getSummary());
+// user.addFriend("Alex", "active");
+// user.toggleStatus();
+// console.log(`\nAfter updates:`);
+// console.log(user.getSummary());
+
+//JavaScript DOM
+// const message = document.querySelector('.message');
+// const button = document.querySelector('#btn');
+// const heading = document.querySelector('h1');
+// const input = document.querySelector('.guess');
+
+// console.log(message);
+// console.log(button);
+// console.log(heading);
+
+// const buttonById = document.getElementById('btn');
+// console.log(buttonById);
+// console.log(buttonById === button);
+
+//Modifying Element Content
+// const message = document.querySelector('.message');
+// console.log(message.textContent);
+// message.textContent = 'Hello from JavaScript';
+
+// message.innerHTML = '<strong>Bold text from JS!</strong>';
+
+// console.log(message.innerText);
+
+//working with input elements
+// const input = document.querySelector('.guess');
+// console.log(input.value);
+// input.value = 'Default text';
+// input.placeholder = 'Type here';
+
+// //Dynamic Style Changes
+// const heading = document.querySelector('h1');
+// heading.style.color = "red";
+// heading.style.backgroundColor = "yellow";
+// heading.style.fontSize = "3rem";
+// heading.style.padding = "20px";
+// heading.style.borderRadius = "10px";
+
+// //Event Listeners and User interaction
+// const button = document.querySelector('#btn');
+// const message = document.querySelector('.message');
+
+// button.addEventListener('click', () => {
+//     console.log('Button was clicked!');
+//     message.textContent = 'You clicked the button!';;
+//     message.style.color = 'greed';
+// }); 
+
+// //Input Events - Real - Time Typing Response
+// //const input = document.querySelector('.guess');
+// input.addEventListener('input', () => {
+//     const userText = input.value;
+//     message.textContent = `You typed: ${userText}`;
+//     message.style.fontSize = `${userText.TextLength + 10}px`;
+// });
+
+//Final Project
+const winningScore = document.getElementById('winning-score');
+const buttons = document.querySelectorAll('.btn-add');
+const gameState = {
+    player1: 0,
+    player2: 0,
+    scores: [],
+    updateDisplay(){
+        document.getElementById(`score-1`).textContent = this.player1;
+        document.getElementById(`score-2`).textContent = this.player2;
     },
-    getSummary(){
-        return `
-        I'm ${this.firstName} ${this.lastName}, ${this.calcAge()} - years old.\n
-        location: ${this.location}\n
-        Friends count: ${this.friends.length}\n
-        Interests:\n
-        ${(() => {
-            let interests = '';
-            this.interests.forEach((interest) => {
-                interests += `\t- ${interest}\n\t\t`;
-            });
-            return interests;
-        })()}
-        `;
-    },
-    toggleStatus(){
-        if(this.isActive){
-            this.isActive = false;
-        }else{
-            this.isActive = true;
+    addPoint(player, winningScore){
+        const key = `player${player}`;
+        this[key]++;
+        //console.log(`${this.player1} : ${this.player2}`)
+        if(this.player1 === winningScore || this.player2 === winningScore){
+            const result = this.showWinner();
+            this.scores.push({player1 : this.player1, player2 : this.player2, result:result});
+            // this.scores.forEach((score) => {
+            //     console.log(`P1 = ${score.player1} : P2 = ${score.player2} | ${score.result}`);
+            // });
         }
+    },
+    showWinner(){
+        const winnerName = document.querySelector('.winner-name');
+        document.querySelector('.winner').classList.remove('hidden');
+        if(this.player1 > this.player2){
+            winnerName.textContent = 'Player 1 Won!';
+            return 'Player 1 Won';
+        }else if(this.player1 === this.player2){
+             winnerName.textContent = 'Its a Tie!';
+            return 'Its a Tie!'
+        }else{
+            winnerName.textContent = 'Player 2 Won!';
+            return 'Player 2 Won';
+        }
+    },
+    resetGame(){
+        this.player1 = 0;
+        this.player2 = 0;
+        buttons.forEach((btn) => {
+            btn.classList.remove('btn-disabled');
+            btn.addEventListener('click', addPointClicked);
+        });
+        document.addEventListener('keydown', addPointKeyDown);
+        document.querySelector('.winner').classList.add('hidden');
+        document.querySelector('.target').textContent = 5;
+        winningScore.value = 5;
+        this.updateDisplay();
+        winningScore.readOnly = false;
     }
 };
 
+function addPointClicked(e){
+    e.target.classList.remove('btn-disabled');
+    const score = Number(winningScore.value);
+    gameState.addPoint(e.target.dataset.player, Number(score));
+    gameState.updateDisplay();
+    if(gameState.player1 === score || gameState.player2 === score){
+        document.querySelectorAll('.btn-add').forEach((btn) => {
+            gameFinshed();
+        });
+    }
+}
+function addPointKeyDown(event){
+    const score = Number(winningScore.value);
 
-console.log(user.getSummary());
-user.addFriend("Alex", "active");
-user.toggleStatus();
-console.log(`\nAfter updates:`);
-console.log(user.getSummary());
+    if (event.key === "1") {
+        gameState.addPoint(1, score);
+        gameState.updateDisplay();
+    }
+
+    if (event.key === "2") {
+        gameState.addPoint(2, score);
+        gameState.updateDisplay();
+    }
+
+    if (gameState.player1 === score || gameState.player2 === score) {
+        gameFinshed();
+    }
+}
+
+winningScore.addEventListener('input', () => {
+    document.querySelector('.target').textContent = winningScore.value;
+});
+
+buttons.forEach((button) => {
+    button.addEventListener('click', addPointClicked);
+});
+
+document.addEventListener('keydown', addPointKeyDown);
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+    gameState.resetGame();
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'r') {
+        gameState.resetGame();
+    }
+});
+
+function gameFinshed(){
+    document.removeEventListener('keydown', addPointKeyDown);
+     buttons.forEach((btn) => {
+        btn.classList.add('btn-disabled');
+        btn.removeEventListener('click', addPointClicked);
+    });
+    winningScore.readOnly = true;
+}
