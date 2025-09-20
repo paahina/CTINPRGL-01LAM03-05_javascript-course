@@ -27,7 +27,13 @@ const init = () => {
   score1El.textContent = 0;
   current0El.textContent = 0;
   current1El.textContent = 0;
+
   diceEl.classList.add('hidden');
+
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
 };
 init();
 
@@ -97,6 +103,26 @@ btnHold.addEventListener('click', () => {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
 
-    switchPlayer();
+    if (scores[activePlayer] >= 100) {
+      playing = false;
+      diceEl.classList.add('hidden');
+
+      document.querySelector(`.player--${activePlayer}`);
+      document
+        .querySelector(`player--${activePlayer}`)
+        .classList.remove('player--active');
+    } else {
+      switchPlayer();
+    }
   }
 });
+
+// Add this test code to verify win condition works
+console.log('Current scores:', scores);
+console.log('Win condition met:', scores[activePlayer] >= 100);
+console.log('Game playing:', playing);
+
+// Test complete game reset
+console.log('Game reset - scores:', scores);
+console.log('Game reset - playing:', playing);
+console.log('Game reset - active player:', activePlayer);
