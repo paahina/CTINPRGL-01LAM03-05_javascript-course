@@ -43,14 +43,60 @@ btnRoll.addEventListener('click', () => {
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
     } else {
-      currentScore = 0;
-      document.getElementById(`current--${activePlayer}`).textContent = 0;
+      switchPlayer();
     }
   }
 });
 
 // Test game state
-console.log('Scores:', scores);
-console.log('Current Score:', currentScore);
-console.log('Active Player:', activePlayer);
-console.log('Playing:', playing);
+// console.log('Scores:', scores);
+// console.log('Current Score:', currentScore);
+// console.log('Active Player:', activePlayer);
+// console.log('Playing:', playing);
+
+const switchPlayer = () => {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+
+  currentScore = 0;
+
+  activePlayer = activePlayer === 0 ? 1 : 0;
+
+  player0El.classList.toggle('player--active');
+  player1El.classList.toggle('player--active');
+};
+
+const btnHold = document.querySelector('.btn--hold');
+
+btnHold.addEventListener('click', () => {
+  if (playing) {
+    scores[activePlayer] += currentScore;
+    document.getElementById(`score--${activePlayer}`).textContent =
+      scores[activePlayer];
+
+    switchPlayer();
+  }
+});
+
+// Add this test code to verify everything works
+console.log('Scores array:', scores);
+console.log('Current score:', currentScore);
+console.log('Active player:', activePlayer);
+// Test the visual indicators
+console.log(
+  'Player 0 has active class:',
+  player0El.classList.contains('player--active')
+);
+console.log(
+  'Player 1 has active class:',
+  player1El.classList.contains('player--active')
+);
+
+btnHold.addEventListener('click', () => {
+  if (playing && currentScore > 0) {
+    scores[activePlayer] += currentScore;
+    document.getElementById(`score--${activePlayer}`).textContent =
+      scores[activePlayer];
+
+    switchPlayer();
+  }
+});
