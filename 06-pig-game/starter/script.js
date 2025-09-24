@@ -15,6 +15,7 @@ const current0El = document.getElementById('current--0');
 const current1El = document.getElementById('current--1');
 const diceEl = document.querySelector('.dice');
 const btnRoll = document.querySelector('.btn--roll');
+const btnReset = document.querySelector('.btn--new');
 
 //initialize game
 const init = () => {
@@ -116,6 +117,8 @@ btnHold.addEventListener('click', () => {
     }
   }
 });
+
+btnReset.addEventListener('click', init);
 
 // Add this test code to verify win condition works
 console.log('Current scores:', scores);
